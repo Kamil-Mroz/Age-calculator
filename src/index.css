@@ -103,7 +103,8 @@ body,
 .input-group {
   flex-direction: column;
   color: var(--clr-neutral-200);
-  width: max-content;
+  width: min-content;
+  overflow-wrap: break-word;
 }
 
 .input-group label {
@@ -186,4 +187,29 @@ p.error {
 }
 .age span {
   color: var(--clr-accent);
+}
+
+@media (width<724px) {
+  :root {
+    font-size: 0.87rem;
+  }
+  .age {
+    font-size: 4.25rem;
+  }
+  .age-inputs {
+    gap: 1rem;
+  }
+
+  .container {
+    padding: 1rem;
+    border-radius: 1rem 1rem 5rem 1rem;
+  }
+  .btn {
+    justify-self: center;
+    padding: 0.75rem;
+  }
+  .input-group input {
+    padding: 0.75rem;
+    width: 100px;
+  }
 }

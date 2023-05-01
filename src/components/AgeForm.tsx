@@ -118,7 +118,7 @@ const AgeForm = ({ dateChange }: AgeForm) => {
         <div className="age-inputs">
           <div
             className={`input-group ${
-              error.day || (error.invalidDate && 'error')
+              error.day || error.invalidDate ? 'error' : ''
             }`}
           >
             <label htmlFor="day">DAY</label>
@@ -137,7 +137,7 @@ const AgeForm = ({ dateChange }: AgeForm) => {
           </div>
           <div
             className={`input-group ${
-              error.month || (error.invalidDate && 'error')
+              error.month || error.invalidDate ? 'error' : ''
             }`}
           >
             <label htmlFor="month">MONTH</label>
@@ -152,7 +152,7 @@ const AgeForm = ({ dateChange }: AgeForm) => {
           </div>
           <div
             className={`input-group ${
-              error.year || (error.invalidDate && 'error')
+              error.year || error.invalidDate ? 'error' : ''
             }`}
           >
             <label htmlFor="year">Year</label>
