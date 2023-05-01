@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import AgeForm from './AgeForm'
+import AgeDisplay from './AgeDisplay'
 
 export type DateOfBirth = {
   day: string
@@ -8,12 +9,8 @@ export type DateOfBirth = {
 }
 
 const AgeCalculator = () => {
-  const [dateOfBirth, setDateOfBirth] = useState<DateOfBirth>({
-    day: '',
-    month: '',
-    year: '',
-  })
-  const dateChange = (date: DateOfBirth) => {
+  const [dateOfBirth, setDateOfBirth] = useState<string | null>(null)
+  const dateChange = (date: string) => {
     setDateOfBirth(date)
   }
 
@@ -21,6 +18,7 @@ const AgeCalculator = () => {
     <div className="age-calculator">
       <div className="container">
         <AgeForm dateChange={dateChange} />
+        <AgeDisplay dateOfBirth={dateOfBirth} />
       </div>
     </div>
   )

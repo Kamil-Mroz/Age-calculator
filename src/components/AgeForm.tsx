@@ -2,7 +2,7 @@ import { DateOfBirth } from './AgeCalculator'
 import ArrowIcon from '../assets/images/icon-arrow.svg'
 import { useState } from 'react'
 type AgeForm = {
-  dateChange: (date: DateOfBirth) => void
+  dateChange: (date: string) => void
 }
 
 const AgeForm = ({ dateChange }: AgeForm) => {
@@ -14,7 +14,7 @@ const AgeForm = ({ dateChange }: AgeForm) => {
   }
 
   const [error, setError] = useState(initialState)
-  console.log(error)
+
   const onBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     const dateElement = e.currentTarget
     let errorMessage = ''
@@ -47,6 +47,10 @@ const AgeForm = ({ dateChange }: AgeForm) => {
       default:
         break
     }
+    dateElement.name !== 'year' &&
+      (dateElement.value = dateElement.valueAsNumber.toLocaleString('en-US', {
+        minimumIntegerDigits: 2,
+      }))
     if (errorMessage)
       setError((prev) => ({
         ...prev,
@@ -56,13 +60,13 @@ const AgeForm = ({ dateChange }: AgeForm) => {
       setError((prev) => ({
         ...prev,
         [dateElement.name]: '',
+        invalidDate: '',
       }))
     }
   }
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    setError((prev) => ({ ...prev, invalidDate: '' }))
 
     if (Object.values(error).some((error) => error)) {
       return
@@ -75,9 +79,13 @@ const AgeForm = ({ dateChange }: AgeForm) => {
 
     if (Object.values(data).some((error) => error === '')) return
 
-    const month = parseInt(formData.get('month') as string)
-    const day = parseInt(formData.get('day') as string)
-    const year = parseInt(formData.get('year') as string)
+    const monthString = formData.get('month') as string
+    const dayString = formData.get('day') as string
+    const yearString = formData.get('year') as string
+
+    const month = parseInt(monthString)
+    const day = parseInt(dayString)
+    const year = parseInt(yearString)
 
     const ListOfDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
     if (month == 1 || month > 2) {
@@ -98,6 +106,8 @@ const AgeForm = ({ dateChange }: AgeForm) => {
         }))
       }
     }
+    const fullDateOfBirth = `${year}-${month}-${day}`
+    dateChange(fullDateOfBirth)
   }
   return (
     <>
@@ -113,10 +123,11 @@ const AgeForm = ({ dateChange }: AgeForm) => {
           >
             <label htmlFor="day">DAY</label>
             <input
-              type="text"
+              type="number"
               name="day"
               id="day"
               onBlur={onBlur}
+              placeholder="DD"
             />
             {error.day ? (
               <p className="error">{error.day}</p>
@@ -131,10 +142,11 @@ const AgeForm = ({ dateChange }: AgeForm) => {
           >
             <label htmlFor="month">MONTH</label>
             <input
-              type="text"
+              type="number"
               name="month"
               id="month"
               onBlur={onBlur}
+              placeholder="MM"
             />
             {error.month ? <p className="error">{error.month}</p> : null}
           </div>
@@ -145,10 +157,11 @@ const AgeForm = ({ dateChange }: AgeForm) => {
           >
             <label htmlFor="year">Year</label>
             <input
-              type="text"
+              type="number"
               name="year"
               id="year"
               onBlur={onBlur}
+              placeholder="YYYY"
             />
             {error.year ? <p className="error">{error.year}</p> : null}
           </div>
