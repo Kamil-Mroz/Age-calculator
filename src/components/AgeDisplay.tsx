@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import CalculateAge from './calculateAge'
+import CalculateAge from './CalculateAge'
 
 const AgeDisplay = ({ dateOfBirth }: { dateOfBirth: string | null }) => {
   const [age, setAge] = useState<{

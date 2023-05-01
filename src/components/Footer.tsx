@@ -8,7 +8,7 @@ export function Footer() {
       >
         Frontend Mentor
       </a>
-      . Coded by <a href="#">Kamil Mróz</a>.
+      . Coded by <a href="https://github.com/Kamil-Mroz">Kamil Mróz</a>.
     </footer>
   )
 }
